@@ -1,6 +1,3 @@
-Berikut adalah template sederhana untuk file `README.md` yang dapat kamu gunakan untuk belajar Go-Lang:
-
-```md
 # Belajar Go-Lang
 
 Go-Lang adalah bahasa pemrograman yang cepat, efisien, dan open-source yang dibuat oleh **Google**. Bahasa ini dirancang untuk memenuhi kebutuhan pemrograman modern seperti pengembangan **microservices** dan sistem terdistribusi. Berikut adalah beberapa poin sejarah penting dari Go-Lang:
