@@ -36,6 +36,17 @@ go version
 
 Jika Go-Lang terinstal dengan benar, kamu akan melihat versi Go-Lang yang terpasang.
 
+## membuat Module
+
+1. Masuk kedalam folder yang telah dibuat 
+2. ketik syntax dibawah
+3. 
+```bash
+go mod init learn-golang
+```
+
+1. Maka go.mod akan terinstal
+
 ## Program Pertama: "Hello, World!"
 
 Berikut adalah contoh program pertama menggunakan Go-Lang:
@@ -79,6 +90,70 @@ Jika kamu tertarik untuk mendalami Go-Lang lebih lanjut, berikut beberapa langka
 - [Go by Example](https://gobyexample.com/)
 
 Selamat belajar Go-Lang dan semoga sukses!
+
+# GoLang: Multiple Main Function Issue
+
+GoLang adalah bahasa pemrograman yang menuntut nama fungsi dalam sebuah module atau project bersifat unik. Ini berarti, kita **tidak boleh membuat nama function yang sama** dalam satu module atau project. Salah satu contoh yang sering terjadi adalah ketika kita secara tidak sengaja membuat **multiple `main()` functions** dalam satu project.
+
+## Permasalahan
+Jika kita memiliki beberapa file di dalam satu project/module Go, seperti `helloworld.go` dan `sample.go`, dan kedua file tersebut memiliki function `main()`, maka proses build module akan mengalami **error** karena Go mendeteksi adanya **duplikasi function `main()`**.
+
+Sebagai contoh:
+- **`helloworld.go`**
+  ```go
+  package main
+  
+  import "fmt"
+  
+  func main() {
+      fmt.Println("Hello, World!")
+  }
+  ```
+
+- **`sample.go`**
+  ```go
+  package main
+  
+  import "fmt"
+  
+  func main() {
+      fmt.Println("This is another main function")
+  }
+  ```
+
+Jika Anda mencoba untuk melakukan build dengan dua file ini, Go akan menghasilkan error:
+
+```
+go build . 
+# error: function main redeclared in this block
 ```
 
+## Penyebab
+Function `main()` dalam Go bersifat **unik**. Fungsi ini adalah entry point untuk aplikasi Go, sehingga dalam satu module atau aplikasi hanya boleh ada satu function `main()` yang akan dijalankan.
+
+## Solusi
+Untuk mengatasi masalah ini, ada beberapa cara yang bisa dilakukan:
+1. **Pisahkan Function `main()` ke Dalam Modul Berbeda**: Jika Anda ingin memiliki beberapa file Go dengan fungsi `main()`, Anda harus memisahkannya menjadi **modul terpisah** atau mengubah nama salah satu function tersebut.
+   
+2. **Gunakan Package yang Berbeda**: Jika Anda tidak memerlukan dua `main()` functions, pertimbangkan untuk menggunakan package selain `main` di file kedua. Misalnya:
+   - Ubah `sample.go` menjadi:
+     ```go
+     package sample
+     
+     import "fmt"
+     
+     func SampleFunc() {
+         fmt.Println("This is a sample function")
+     }
+     ```
+     
+3. **Ubah Nama Function**: Jika kedua fungsi `main()` tidak diperlukan, Anda dapat mengganti nama salah satu fungsi agar tidak terjadi duplikasi.
+
+## Kesimpulan
+Dalam GoLang, hanya boleh ada satu `main()` function per module atau project, karena function `main()` adalah entry point dari aplikasi. Untuk mengatasi masalah duplikasi function `main()`, Anda dapat memisahkan modul, menggunakan package berbeda, atau mengubah nama function.
+
+---
+
 File `README.md` ini memberi pengantar tentang Go-Lang, sejarah, cara instalasi, serta program sederhana untuk memulai.
+    
+```
